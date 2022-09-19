@@ -1,8 +1,10 @@
 package com.example.kp_db;
 
 import com.example.kp_db.Class.*;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -252,18 +254,7 @@ public class role4Controller {
     ObservableList<Orders> orderList = FXCollections.observableArrayList();
     ObservableList<Specialist> specialistsList = FXCollections.observableArrayList();
     ObservableList<Pays> paysList = FXCollections.observableArrayList();
-    final String FONT = "C:\\Users\\damas\\Downloads\\TNR.ttf";
-    BaseFont baseFont;
 
-    {
-        try {
-            baseFont = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, true);
-        } catch (DocumentException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    Font font = new Font(baseFont);
 
     @FXML
     private TextField tField_order_idEmployee;
@@ -684,19 +675,19 @@ public class role4Controller {
     void createPDF_MaxSalary(ActionEvent event) {
         try {
             bazaList.clear();
-            String file_name = "D:\\БД\\FileMaxSalary.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileMaxSalary.pdf";
             Document FileLateOrder = new Document();
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(5);
-            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Ім'я", font)));
+            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Ім'я", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Прізвише", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Прізвише", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Зарплата", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Зарплата", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Вид діяльності", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Вид діяльності", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
             connection = dbCon.getConnection();
@@ -706,7 +697,7 @@ public class role4Controller {
                     "WHERE S.idAct = S2.idAct);";
             PreparedStatement prSt;
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("має вищу  ЗП  за середню між  однаковим  видом діяльності", font);
+            Paragraph paragraph = new Paragraph("має вищу  ЗП  за середню між  однаковим  видом діяльності", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -723,15 +714,15 @@ public class role4Controller {
                 );
             }
             for (int i = 0; i < bazaList.size(); i++) {
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getName(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getName(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getSurname(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getSurname(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getPatronymic(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getPatronymic(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(Float.toString(bazaList.get(i).getSalary()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Float.toString(bazaList.get(i).getSalary()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getTypeActv(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getTypeActv(), PDFfont.getFont())));
                 pTabl.addCell(c1);
             }
             pTabl.addCell(c1);
@@ -748,19 +739,19 @@ public class role4Controller {
     void createPDFmaxMin(ActionEvent event) {
         try {
             bazaList.clear();
-            String file_name = "D:\\БД\\FileMaxMinSalary.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileMaxMinSalary.pdf";
             Document FileLateOrder = new Document();
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(5);
             PdfPCell c1 = new PdfPCell(new Phrase("Ім'я"));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Прізвише", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Прізвише", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Коментар", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Коментар", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
             connection = dbCon.getConnection();
@@ -775,7 +766,7 @@ public class role4Controller {
             PreparedStatement prSt;
             prSt = connection.prepareStatement(query);
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("Отримують найбільше/найменше грошей", font);
+            Paragraph paragraph = new Paragraph("Отримують найбільше/найменше грошей", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -793,15 +784,15 @@ public class role4Controller {
 
             }
             for (ClassBAZA classBAZA : bazaList) {
-                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getName(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getName(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getSurname(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getSurname(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getPatronymic(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getPatronymic(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(classBAZA.getGetOrders()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(classBAZA.getGetOrders()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getComment(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(classBAZA.getComment(), PDFfont.getFont())));
                 pTabl.addCell(c1);
             }
             FileLateOrder.add(pTabl);

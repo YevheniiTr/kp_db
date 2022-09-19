@@ -1,8 +1,10 @@
 package com.example.kp_db;
 
 import com.example.kp_db.Class.*;
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -19,8 +21,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
@@ -460,20 +460,6 @@ public class managerController {
     ObservableList<Pays> paysList = FXCollections.observableArrayList();
     ObservableList<User> userList2 = FXCollections.observableArrayList();
 
-    final String FONT = "C:\\Users\\damas\\Downloads\\TNR.ttf";
-    BaseFont baseFont;
-
-    {
-        try {
-            baseFont = BaseFont.createFont(FONT, BaseFont.IDENTITY_H, true);
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    Font font = new Font(baseFont);
 
     @FXML
     private TextField tField_order_idEmployee;
@@ -1913,18 +1899,18 @@ public class managerController {
     public void createFileLateOrder(ActionEvent actionEvent) {
         try {
             bazaList.clear();
-            String file_name = "D:\\БД\\FileLateOrder.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileLateOrder.pdf";
             Document FileLateOrder = new Document();
             new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(file_name), true), StandardCharsets.UTF_8));
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(4);
-            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Назва замовлення", font)));
+            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Назва замовлення", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Тип замовлення", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Тип замовлення", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Дата створення", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Дата створення", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Дата виконання", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Дата виконання", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
             //Font f1 = FontFactory.getFont(FONT, "Cp1250", true);
@@ -1939,7 +1925,7 @@ public class managerController {
             PreparedStatement prSt;
             prSt = connection.prepareStatement(query);
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("Замовлення однакового типу, час виконання якого перевищало  середній час виконання  інших замовлень", font);
+            Paragraph paragraph = new Paragraph("Замовлення однакового типу, час виконання якого перевищало  середній час виконання  інших замовлень", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -1956,13 +1942,13 @@ public class managerController {
 
             }
             for (int i = 0; i < bazaList.size(); i++) {
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderName(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderName(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderDate(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderDate(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getDelieveryDate(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getDelieveryDate(), PDFfont.getFont())));
                 pTabl.addCell(c1);
             }
             FileLateOrder.add(pTabl);
@@ -1977,13 +1963,13 @@ public class managerController {
     public void createFileAverageTime(ActionEvent actionEvent) {
         try {
             bazaList.clear();
-            String file_name = "D:\\БД\\FileAverageTime.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileAverageTime.pdf";
             Document FileLateOrder = new Document();
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(2);
-            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Вид замовлення", font)));
+            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Вид замовлення", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Витрачено днів", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Витрачено днів", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
             //Font f1 = FontFactory.getFont(FONT, "Cp1250", true);
@@ -1993,7 +1979,7 @@ public class managerController {
             PreparedStatement prSt;
             prSt = connection.prepareStatement(query);
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("Середній час(у днях) на виконання  кожного типу замовлень ", font);
+            Paragraph paragraph = new Paragraph("Середній час(у днях) на виконання  кожного типу замовлень ", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -2007,9 +1993,9 @@ public class managerController {
                 );
             }
             for (int i = 0; i < bazaList.size(); i++) {
-                c1 = new PdfPCell(new Phrase(new Chunk(String.valueOf(bazaList.get(i).getSumDays()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(String.valueOf(bazaList.get(i).getSumDays()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), PDFfont.getFont())));
                 pTabl.addCell(c1);
 
             }
@@ -2029,17 +2015,17 @@ public class managerController {
     public void createFileAverageMetric(ActionEvent actionEvent) {
         try {
             bazaList.clear();
-            String file_name = "D:\\БД\\FileAverageMetrics.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileAverageMetrics.pdf";
             Document FileLateOrder = new Document();
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(4);
-            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість переглядів", font)));
+            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість переглядів", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість кліків", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість кліків", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість унікальних користувачів", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Середня кількість унікальних користувачів", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Вид Замовлення", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Вид Замовлення", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
             connection = dbCon.getConnection();
@@ -2051,7 +2037,7 @@ public class managerController {
             PreparedStatement prSt;
             prSt = connection.prepareStatement(query);
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("Середні показники характеристик кожного типу замовлення", font);
+            Paragraph paragraph = new Paragraph("Середні показники характеристик кожного типу замовлення", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -2070,13 +2056,13 @@ public class managerController {
 
             }
             for (int i = 0; i < bazaList.size(); i++) {
-                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgImpr()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgImpr()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgClicks()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgClicks()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgUsers()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getAvgUsers()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getOrderType(), PDFfont.getFont())));
                 pTabl.addCell(c1);
             }
             FileLateOrder.add(pTabl);
@@ -2096,19 +2082,19 @@ public class managerController {
             bazaList.clear();
 
 
-            String file_name = "D:\\БД\\FileDiffEmpl.pdf";
+            String file_name = "C:\\Users\\Yevhenii\\IdeaProjects\\kp_db\\PDF_Files\\FileDiffEmpl.pdf";
             Document FileLateOrder = new Document();
             PdfWriter.getInstance(FileLateOrder, new FileOutputStream(file_name));
             PdfPTable pTabl = new PdfPTable(5);
-            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("ім'я", font)));
+            PdfPCell c1 = new PdfPCell(new Phrase(new Chunk("ім'я", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Прізвище", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Прізвище", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("По-батькові", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Принесено замовлень ", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Принесено замовлень ", PDFfont.getFont())));
             pTabl.addCell(c1);
-            c1 = new PdfPCell(new Phrase(new Chunk("Коментар", font)));
+            c1 = new PdfPCell(new Phrase(new Chunk("Коментар", PDFfont.getFont())));
             pTabl.addCell(c1);
             pTabl.setHeaderRows(1);
 
@@ -2125,7 +2111,7 @@ public class managerController {
 
             PreparedStatement prSt = null;
             FileLateOrder.open();
-            Paragraph paragraph = new Paragraph("Принесено замовлень", font);
+            Paragraph paragraph = new Paragraph("Принесено замовлень", PDFfont.getFont());
             FileLateOrder.add(paragraph);
             FileLateOrder.add(new Paragraph(" "));
             FileLateOrder.add(new Paragraph(" "));
@@ -2146,15 +2132,15 @@ public class managerController {
             }
             System.out.println(bazaList.size());
             for (int i = 0; i < bazaList.size(); i++) {
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getName(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getName(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getSurname(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getSurname(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getPatronymic(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getPatronymic(), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getGetOrders()), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(Integer.toString(bazaList.get(i).getGetOrders()), PDFfont.getFont())));
                 pTabl.addCell(c1);
-                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getComment(), font)));
+                c1 = new PdfPCell(new Phrase(new Chunk(bazaList.get(i).getComment(), PDFfont.getFont())));
                 pTabl.addCell(c1);
             }
             FileLateOrder.add(pTabl);
