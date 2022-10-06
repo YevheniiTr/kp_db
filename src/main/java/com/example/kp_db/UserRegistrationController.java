@@ -1,14 +1,14 @@
 package com.example.kp_db;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
 import com.example.kp_db.Class.UsersRoles;
 import com.example.kp_db.Class.dbCon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class UserRegistrationController {
     @FXML
@@ -48,7 +48,7 @@ public class UserRegistrationController {
     final String insertEmployerQuery = "INSERT INTO  employees (Name1, Surname, patronymic, mobPhone,addres,email)  VALUES (?,?,?,?,?,?)";
     final String insertUserQuery = "INSERT INTO  USERS (login,pass,uRole)  VALUES (?,?,?)";
 
-    private boolean testEmptyTextFields() {
+    boolean testEmptyTextFields() {
         return !userLoginTextField.getText().isBlank() && !userPasswordTextField.getText().isBlank()
                 && !userNameTextField.getText().isBlank() && !userSurnameTextField.getText().isBlank()
                 && !userPatronymicTextField.getText().isBlank() && !userEmailTextField.getText().isBlank()
