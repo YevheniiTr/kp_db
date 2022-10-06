@@ -1,13 +1,5 @@
 package com.example.kp_db;
 
-import java.io.IOException;
-import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 import com.example.kp_db.Class.User;
 import com.example.kp_db.Class.UsersRoles;
 import com.example.kp_db.Class.dbCon;
@@ -22,6 +14,15 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 public class mainController {
     @FXML

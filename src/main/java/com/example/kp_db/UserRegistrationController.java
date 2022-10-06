@@ -2,7 +2,6 @@ package com.example.kp_db;
 
 import com.example.kp_db.Class.UsersRoles;
 import com.example.kp_db.Class.dbCon;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
@@ -12,25 +11,25 @@ import java.sql.SQLException;
 
 public class UserRegistrationController {
     @FXML
-    private TextField userPatronymicTextField;
+    private TextField userPatronymicTextField = new TextField();;
 
     @FXML
-    private TextField userEmailTextField;
+    private TextField userEmailTextField = new TextField();;
 
     @FXML
-    private TextField userLoginTextField;
+    private TextField userLoginTextField = new TextField();
 
     @FXML
-    private TextField userNameTextField;
+    private TextField userNameTextField = new TextField();;
 
     @FXML
-    private TextField userPasswordTextField;
+    private TextField userPasswordTextField = new TextField();;
 
     @FXML
-    private TextField userPhoneTextField;
+    private TextField userPhoneTextField = new TextField();;
 
     @FXML
-    private RadioButton role2ManagerRadioButton;
+    private RadioButton role2ManagerRadioButton ;
 
     @FXML
     private RadioButton role3AccountantRadioButton;
@@ -39,10 +38,10 @@ public class UserRegistrationController {
     private Button registrationButton;
 
     @FXML
-    private TextField userSurnameTextField;
+    private TextField userSurnameTextField = new TextField();;
 
     @FXML
-    private TextField userAddressTextField;
+    private TextField userAddressTextField = new TextField();;
 
 
     final String insertEmployerQuery = "INSERT INTO  employees (Name1, Surname, patronymic, mobPhone,addres,email)  VALUES (?,?,?,?,?,?)";
@@ -71,7 +70,7 @@ public class UserRegistrationController {
         }
     }
 
-    private void userRegistration() {
+    public String userRegistration() {
         if (testEmptyTextFields()) {
             try {
                 PreparedStatement preparedStatement = dbCon.connect().prepareStatement(insertUserQuery);
@@ -86,29 +85,35 @@ public class UserRegistrationController {
                     preparedStatement.executeUpdate();
                     closeWindow();
                 } else {
-                    getAllert("Посада не була вибрана");
+
+                      //return  new String(Allert.getAllert(Alert.AlertType.ERROR,"Посада не була вибрана").getHeaderText());
+                    return getAllert("Посада не була вибрана");
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            getAllert("Введено неповні данні");
+              //return new String(Allert.getAllert(Alert.AlertType.ERROR,"Введено неповні данні").getHeaderText());
+            return getAllert("Введено неповні данні");
         }
+        return  getAllert("Користувач успішно зареєстрований");
+                //new String(Allert.getAllert(Alert.AlertType.ERROR,"").getHeaderText());
     }
 
-    private void getAllert(String message) {
+    private String getAllert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Dialog");
         alert.setHeaderText(message);
         alert.setContentText("Ooops, there was an error!");
         alert.showAndWait();
+        return  message;
     }
     private void closeWindow(){
         Stage stageReg = (Stage) registrationButton.getScene().getWindow();
         stageReg.close();
     }
     @FXML
-    public void userRegistrationButton(ActionEvent event) {
+    public void userRegistrationButton() {
             employerRegistration();
             userRegistration();
     }
